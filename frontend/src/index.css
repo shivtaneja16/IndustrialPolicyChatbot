@@ -1,0 +1,16 @@
+@import "tailwindcss";
+
+@layer base {
+  body {
+    background-color: rgb(17 24 39); /* gray-900 */
+    color: white;
+  }
+
+  input {
+    color: white;
+  }
+
+  ::placeholder {
+    color: rgb(156 163 175); /* gray-400 */
+  }
+}
