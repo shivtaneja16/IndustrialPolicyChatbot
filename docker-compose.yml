@@ -1,0 +1,26 @@
+services:
+
+  backend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8000:8000"
+    environment:
+      - GROQ_API_KEY                  # must be set in the host shell before running
+    volumes:
+      - hf_cache:/root/.cache/huggingface   # persist downloaded HF models
+    restart: unless-stopped
+
+  frontend:
+    build:
+      context: .
+      dockerfile: Dockerfile.frontend
+    ports:
+      - "80:80"
+    depends_on:
+      - backend
+    restart: unless-stopped
+
+volumes:
+  hf_cache:                           # named volume so model weights survive rebuilds
