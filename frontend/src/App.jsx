@@ -17,6 +17,7 @@ function getSessionId() {
 }
 
 const sessionId = getSessionId();
+const API_BASE = import.meta.env.VITE_API_BASE_URL || "";
 
 // Map backend history ({role, content}) → display messages ({text, sender})
 function toDisplayMessages(history) {
@@ -47,7 +48,7 @@ export default function ChatbotUI() {
     setError(null);
 
     try {
-      const res = await fetch("/chat", {
+      const res = await fetch(`${API_BASE}/chat`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ question, session_id: sessionId }),
@@ -72,7 +73,7 @@ export default function ChatbotUI() {
 
   async function handleReset() {
     try {
-      await fetch(`/history/${sessionId}`, { method: "DELETE" });
+      await fetch(`${API_BASE}/history/${sessionId}`, { method: "DELETE" });
       setMessages([]);
       setInput("");
       setError(null);
